@@ -8,7 +8,7 @@
     font-size: 150%;
 }
 
-.header, .rating, .moves, .timer_container {
+.header, .rating, .moves, .timer_container, .footer {
     justify-self: stretch;
     line-height: 50px;  
     text-align: center;

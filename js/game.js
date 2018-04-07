@@ -5,12 +5,11 @@ $("#moves").text(0);
 $("#rating").text(3);
 
 let interval_id;
-let sec = 0;
-let min = 0;
 let hour = 0;
-let hour_text = $(".hour");
-let min_text = $(".minute");
-let sec_text = $(".sec");
+let min = 0;
+let sec = 0;
+
+// let game_running = false;
 
 function shuffle(arr) {
     for (let i = arr.length -1; i > 0; i--) {
@@ -29,6 +28,16 @@ function getStarRating(moves) {
     }
 }
 
+let hour_text = $("#hour");
+let min_text  = $("#minute");
+let sec_text  = $("#sec");
+
+function printTime(hour, min, sec) {
+    hour_text.html(hour + ":");
+    min_text.html(min + ":");
+    sec_text.html(sec);
+}
+
 $("#start_b").click(function(event) {
     shuffle(game_board);
     $("div.main > div.board_grid").empty();
@@ -38,33 +47,55 @@ $("#start_b").click(function(event) {
     previous_index = -1;
     click_counter = 0;
 
+    window.clearInterval(interval_id);
+    sec = 0;
+    min = 0;
+    hour = 0;
+    printTime(hour, min, sec);
     $("#timerI_container").toggleClass("pause");
-        if($("#timerI_container").hasClass("pause")) {
-            window.clearInterval(interval_id);
-        } else {
-            interval_id = setInterval(function() {
-                sec++;
-                if(sec === 60) {
-                    min++;
-                    if(min === 60) {
-                        hour++;
-                        min = 0;
-                        sec = 0;
-                    }
-                    sec = 0;
-                }
-                // print time
-                hour_text.html(hour + ":");
-                min_text.html(min + ":");
-                sec_text.html(sec + ":");
-            }, 10);
+    interval_id = setInterval(function() {
+        sec++;
+        if(sec === 60) {
+            min++;
+            if(min === 60) {
+                hour++;
+                min = 0;
+                sec = 0;
+            }
+            sec = 0;
         }
-    // Disable page reloading
+        printTime(hour, min, sec);
+    }, 1000);
     event.preventDefault(); 
 });
 
 $("#pause_b").click(function(event) {
-    window.clearInterval(interval_id);
+    if((hour === 0 && min === 0 && sec === 0)
+    && ($(".board_grid").is(":empty"))) {
+        alert("blaaaa");
+        $("#pause_b").off();
+        return;
+    }
+    $("#timerI_container").toggleClass("pause");
+    if($("#timerI_container").hasClass("pause")) {
+            $("#pause_b").text("S");
+            window.clearInterval(interval_id);
+    } else {
+        interval_id = setInterval(function() {
+            sec++;
+            if(sec === 60) {
+                min++;
+                if(min === 60) {
+                    hour++;
+                    min = 0;
+                    sec = 0;
+                }
+                sec = 0;
+            }
+            printTime(hour, min, sec);
+        }, 1000);
+    }
+    event.preventDefault(); 
 });
 
 $(".board_grid").on("click", ".card.back", function(event) {
