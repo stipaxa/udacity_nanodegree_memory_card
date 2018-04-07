@@ -1,0 +1,23 @@
+.main {
+    padding: 5px;
+}
+
+.card {
+    background-color: burlywood; 
+    padding: 0px;
+    font-size: 150%;
+}
+
+.header, .rating, .moves, .timer_container {
+    justify-self: stretch;
+    line-height: 50px;  
+    text-align: center;
+    vertical-align: middle;
+}
+
+#start_b, #pause_b {
+    display: inline-block; 
+    line-height: 50px;  
+    text-align: center;
+    vertical-align: middle;
+}

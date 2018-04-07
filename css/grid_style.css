@@ -1,0 +1,121 @@
+body {
+    background-color: darksalmon;
+    margin: 20px;
+}
+
+/* .container {
+    grid-template-areas: 
+    "header",
+    "nav",
+    "sidebar",
+    "main",
+    "sidebar2",
+    "footer"
+} */
+
+.container {
+    color: #444;
+    display: grid;
+    width: 100%;
+    grid-gap: 10px;
+    grid-template-columns: 50px 1fr 50px;
+    grid-template-rows: 50px 50px 1fr 50px;
+    grid-template-areas: 
+    "header header header"
+    "nav nav nav"
+    "sidebar main sidebar2"
+    "footer footer footer";
+}
+
+.box {
+    border-radius: 10px;
+    padding: 5px;
+    font-size: 150%;
+}
+
+/*
+* Header
+*/
+.header {
+    grid-area: header;
+    background-color: greenyellow;
+}
+
+/*
+* Nav
+*/
+.nav {
+    grid-area: nav;
+    display: grid;
+    grid-gap: 5px;
+    grid-template-columns: 80px 1fr 1fr 1fr;
+    grid-template-areas:
+    "start rating moves timer_container";
+}
+
+.start {
+    grid-area: start;
+    background-color: gold;
+}
+
+.rating {
+    grid-area: rating;
+    background-color: fuchsia;
+}
+
+.moves {
+    grid-area: moves;
+    background-color: forestgreen;
+}
+
+.timer_container {
+    grid-area: timer_container;
+    background-color: darkviolet;
+    /* grid-area: nav; */
+    display: grid;
+    grid-gap: 5px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas:
+    "hour minute sec";
+}
+
+/*
+* Sidebars
+*/
+.sidebar {
+    grid-area: sidebar;
+    background-color: darkgray;
+}
+
+.sidebar2 {
+    grid-area: sidebar2;
+    background-color: darkgray;
+}
+
+/*
+* Main
+*/
+.main {
+    grid-area: main;
+    background-color: darkred;
+}
+
+.board_grid {
+    width: 430px;
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(4, 100px);
+    grid-template-rows: repeat(4, 100px);
+    grid-auto-flow: row;
+    margin: auto;
+}
+
+/*
+* Footer
+*/
+
+.footer {
+    grid-area: footer;
+    background-color: darkgray;
+}
+
