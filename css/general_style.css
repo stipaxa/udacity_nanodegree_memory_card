@@ -1,14 +1,43 @@
+body {
+    font-family: 'roboto', sans-serif;
+    /* background-color: #992d2d; */
+    background-color: #725a5ab4;
+    margin: 20px;
+}
+
+.header {
+    background-image: url(../imgs/memory_card_title1.png);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 .main {
     padding: 5px;
 }
 
 .card {
-    background-color: burlywood; 
+    /* background-color: burlywood;  */
     padding: 0px;
     font-size: 150%;
 }
 
-.header, .rating, .moves, .timer_container, .footer {
+.card.back {
+    background-image: url(../imgs/card_back1.png);
+    background-size: 100px 100px;
+    background-repeat: no-repeat;
+}
+
+.boxshadow {
+    border: 2px solid #884848;
+    border-radius: 10px;
+    position: relative;
+    -moz-box-shadow: 1px 2px 3px rgba(0, 0, 0,0.5);
+    -webkit-box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
+    box-shadow: 1px 2px 3px rgba(0, 0, 0, .5);
+   	margin-bottom: 4px;
+}
+
+#rating, #moves, .timer_container, .footer {
     justify-self: stretch;
     line-height: 50px;  
     text-align: center;
@@ -44,15 +73,19 @@
     width: 50%;
 }
 
-.pause_close {
+#end_game_close,
+#pause_close {
     color: #000;
     float: right;
     font-size: 30px;
     font-weight: bold;
 }
 
-.pause_close:hover,
-.pause_close.focus {
+
+#end_game_close:hover,
+#end_game_close:focus,
+#pause_close:hover,
+#pause_close.focus {
     color: red;
     text-decoration: none;
     cursor: pointer;

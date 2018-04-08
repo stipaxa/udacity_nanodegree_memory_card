@@ -10,24 +10,23 @@
     <body>
         <div class="container">
             <!-- header grid -->
-            <div class="header">
-                Memory Game</div>
+            <div class="header"></div>
             <!-- nav grid -->
             <div class="nav">
                 <div class="start">
                     <div id="start_b">NG</div>
                     <div id="pause_b">Pause</div>
-                    <!-- Modal window (default: hidden)-->
-                    <div id="modal_w" class="modal">
+                    <!-- Modal window for pause (default: hidden)-->
+                    <div id="modal_pause" class="modal">
                         <!-- Modal content -->
                         <div class="modal_c">
-                            <span class="pause_close">&times;</span>
+                            <span id="pause_close">&times;</span>
                             <p>PAUSE</p>
                         </div>
                     </div>          
                 </div>
-                <div class="rating">rating</div>
-                <div class="moves">moves</div>
+                <div id="rating">3</div>
+                <div id="moves">0</div>
                 <div class="timer_container pause" id="timerI_container">
                     <div id="hour">0:</div>
                     <div id="minute">0:</div>
@@ -41,6 +40,17 @@
             <!-- main grid -->
             <div class="main">
                 <div class="board_grid"></div>
+                <!-- Modal window for final details (default: hidden)-->
+                <div id="modal_end_game" class="modal">
+                    <!-- Modal content -->
+                    <div class="modal_c">
+                        <span id="end_game_close">&times;</span>
+                        <p>Congrats</p>
+                        <div id="time_end"></div>
+                        <div id="moves_end"></div>
+                        <div id="modal_new_game_b">new game?</div>
+                    </div>
+                </div>
             </div>
             <!-- footer grid -->
             <div class="footer">
@@ -48,6 +58,5 @@
             </div>
         </div>
         <script type="text/javascript" src="js/game.js"></script>
-        <script type="text/javascript" src="js/modal.js"></script>
     </body>
 </html>

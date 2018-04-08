@@ -1,20 +1,5 @@
-body {
-    background-color: darksalmon;
-    margin: 20px;
-}
-
-/* .container {
-    grid-template-areas: 
-    "header",
-    "nav",
-    "sidebar",
-    "main",
-    "sidebar2",
-    "footer"
-} */
-
 .container {
-    color: #444;
+    /* color: #444; */
     display: grid;
     width: 100%;
     grid-gap: 10px;
@@ -38,7 +23,7 @@ body {
 */
 .header {
     grid-area: header;
-    background-color: greenyellow;
+    /* background-color: greenyellow; */
 }
 
 /*
@@ -84,12 +69,12 @@ body {
 */
 .sidebar {
     grid-area: sidebar;
-    background-color: darkgray;
+    /* background-color: darkgray; */
 }
 
 .sidebar2 {
     grid-area: sidebar2;
-    background-color: darkgray;
+    /* background-color: darkgray; */
 }
 
 /*
@@ -97,7 +82,7 @@ body {
 */
 .main {
     grid-area: main;
-    background-color: darkred;
+    /* background-color: darkred; */
 }
 
 .board_grid {
