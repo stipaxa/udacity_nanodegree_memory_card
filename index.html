@@ -2,6 +2,7 @@
 <html>
     <head>
         <title>Memory game</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <link rel="stylesheet" href="css/general_style.css">
         <link rel="stylesheet" href="css/grid_style.css">
@@ -14,8 +15,16 @@
             <!-- nav grid -->
             <div class="nav">
                 <div class="start">
-                    <div id="start_b">N</div>
-                    <div id="pause_b">P</div>
+                    <div id="start_b">NG</div>
+                    <div id="pause_b">Pause</div>
+                    <!-- Modal window (default: hidden)-->
+                    <div id="modal_w" class="modal">
+                        <!-- Modal content -->
+                        <div class="modal_c">
+                            <span class="pause_close">&times;</span>
+                            <p>PAUSE</p>
+                        </div>
+                    </div>          
                 </div>
                 <div class="rating">rating</div>
                 <div class="moves">moves</div>
@@ -39,5 +48,6 @@
             </div>
         </div>
         <script type="text/javascript" src="js/game.js"></script>
+        <script type="text/javascript" src="js/modal.js"></script>
     </body>
 </html>

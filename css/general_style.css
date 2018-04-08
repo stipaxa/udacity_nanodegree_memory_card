@@ -21,3 +21,39 @@
     text-align: center;
     vertical-align: middle;
 }
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.3);
+}
+
+.modal_c {
+    background-color: papayawhip;
+    margin: auto;
+    padding: 20px;
+    border: 2px solid #888;
+    width: 50%;
+}
+
+.pause_close {
+    color: #000;
+    float: right;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.pause_close:hover,
+.pause_close.focus {
+    color: red;
+    text-decoration: none;
+    cursor: pointer;
+}

@@ -9,7 +9,8 @@ let hour = 0;
 let min = 0;
 let sec = 0;
 
-// let game_running = false;
+let modal = $("#modal_w");
+let pause_b = $("#pause_b");
 
 function shuffle(arr) {
     for (let i = arr.length -1; i > 0; i--) {
@@ -38,48 +39,10 @@ function printTime(hour, min, sec) {
     sec_text.html(sec);
 }
 
-$("#start_b").click(function(event) {
-    shuffle(game_board);
-    $("div.main > div.board_grid").empty();
-    for (let i = 0; i < game_board.length; i++) {
-        $("div.main > div.board_grid").append("<div class='card back'>"+ game_board[i] + "</div>");
-    }
-    previous_index = -1;
-    click_counter = 0;
-
-    window.clearInterval(interval_id);
-    sec = 0;
-    min = 0;
-    hour = 0;
-    printTime(hour, min, sec);
-    $("#timerI_container").toggleClass("pause");
-    interval_id = setInterval(function() {
-        sec++;
-        if(sec === 60) {
-            min++;
-            if(min === 60) {
-                hour++;
-                min = 0;
-                sec = 0;
-            }
-            sec = 0;
-        }
-        printTime(hour, min, sec);
-    }, 1000);
-    event.preventDefault(); 
-});
-
-$("#pause_b").click(function(event) {
-    if((hour === 0 && min === 0 && sec === 0)
-    && ($(".board_grid").is(":empty"))) {
-        alert("blaaaa");
-        $("#pause_b").off();
-        return;
-    }
+function toggleTimer() {
     $("#timerI_container").toggleClass("pause");
     if($("#timerI_container").hasClass("pause")) {
-            $("#pause_b").text("S");
-            window.clearInterval(interval_id);
+        window.clearInterval(interval_id);
     } else {
         interval_id = setInterval(function() {
             sec++;
@@ -95,6 +58,41 @@ $("#pause_b").click(function(event) {
             printTime(hour, min, sec);
         }, 1000);
     }
+}
+
+$("#start_b").on("click", function(event) {
+    shuffle(game_board);
+    $("div.main > div.board_grid").empty();
+    for (let i = 0; i < game_board.length; i++) {
+        $("div.main > div.board_grid").append("<div class='card back'>"+ game_board[i] + "</div>");
+    }
+
+    previous_index = -1;
+    click_counter = 0;
+
+    sec = 0;
+    min = 0;
+    hour = 0;
+    printTime(hour, min, sec);
+    window.clearInterval(interval_id);
+    $("#timerI_container").addClass("pause");
+    toggleTimer();
+    
+    pause_b.off();
+    pause_b.on("click", function(event) {
+        toggleTimer();
+        modal.css("display", "block");
+        event.preventDefault(); 
+    });
+
+    $(".pause_close").off();
+    $(".pause_close").on("click", function(event) {
+        console.log("blaaaa");
+        toggleTimer();
+        modal.css("display", "none");
+        event.preventDefault(); 
+    });
+    
     event.preventDefault(); 
 });
 
@@ -117,6 +115,9 @@ $(".board_grid").on("click", ".card.back", function(event) {
         $(".moves").text(moves);
         $(".rating").text(getStarRating(moves));
         if (!$(".board_grid").children().hasClass("back")) {
+                // timer
+                toggleTimer();
+                pause_b.off();
                 alert("all cards open");
         }
         return;        
