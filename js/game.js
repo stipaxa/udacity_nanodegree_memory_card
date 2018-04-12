@@ -1,6 +1,7 @@
 let game_board = new Array (1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8);
-let previous_index = -1;
 let click_counter = 0;
+
+let previous_card_element = null;
 
 let interval_id;
 let hour = 0;
@@ -17,6 +18,8 @@ let sec_text  = $("#sec");
 let moves_text = $("#moves");
 let rating_text = $("#rating");
 let board_grid = $(".board_grid");
+
+let clickable = true;
 
 function shuffle(arr) {
     for (let i = arr.length -1; i > 0; i--) {
@@ -65,18 +68,25 @@ function toggleTimer() {
 function newGame() {
         // Generate a new game board
         shuffle(game_board);
-        $("div.main > div.board_grid").empty();
+        $(".main > .board_grid").empty();
+
+        let board_grid = $("div.main > div.board_grid");
         for (let i = 0; i < game_board.length; i++) {
-            $("div.main > div.board_grid").append("<div class='card back boxshadow'>"+ game_board[i] + "</div>");
+            board_grid.append("<div class='card hidden' " + "id='card_" + game_board[i] + "'" + ">" + 
+            "<img class='face' src='imgs/" + game_board[i] + 
+            "_star.png'>" + 
+            "<img class='back' src='imgs/blank.png'>" +
+            "</div>");
         }
     
         // Initial values
-        previous_index = -1;
+        clickable = true;
         click_counter = 0;
         sec = 0;
         min = 0;
         hour = 0;
         moves = 0;
+        previous_card_element = null;
         printTime(hour, min, sec);
         rating_text.text("3");
         moves_text.text("0");
@@ -111,25 +121,23 @@ $("#modal_new_game_b").on("click", function(event) {
     newGame();
 });
 
-board_grid.on("click", ".card.back", function(event) {
-    let current_card = Number($(this).text());   // data of selected element (convert to number for if)
-    let current_index = $(this).index(); // index of selected element
-    let previous_card = -1;
-    if (previous_index != -1) {
-        previous_card = game_board[previous_index];
-    }
-    $(this).removeClass("back");
-    click_counter += 1;
+// for testing
+function getListClasses(el) {
+    let classes = el.attr("class");
+    let classes_arr  = classes.split(" ");
+    console.log("classes: " + JSON.stringify(classes_arr));
+}
 
-    let color = "yellow";
-    $(this).css("background-color", color);
+function matchCards(current_card_element) {
+    moves = click_counter/2;
+    console.log("click_count ");
+    moves_text.text(moves);
+    rating_text.text(getStarRating(moves));
+    let current_card = getCardStarNumber(current_card_element);
+    let previous_card = getCardStarNumber(previous_card_element);
     if (current_card === previous_card) {
-        $("div.board_grid").children().eq(previous_index).css("background-color", color);
-        previous_index = -1;
-        moves = click_counter/2;
-        moves_text.text(moves);
-        rating_text.text(getStarRating(moves));
-        if (!$(".board_grid").children().hasClass("back")) {
+        console.log("blaaa1");
+        if (!$(".board_grid").children().hasClass("hidden")) {
             toggleTimer();
             pause_b.off();
             $("#time_end").text("hour: " + hour + " minutes: " + min + " sec: " + sec);
@@ -140,21 +148,51 @@ board_grid.on("click", ".card.back", function(event) {
                 $("#modal_end_game").css("display", "none");
             });
         }
-        return;        
-    } else if (previous_index != -1) {
+        clickable = true;
+        previous_card_element = null;
+    } else {
         // switch to back
-        $(this).addClass("back");
-        $("div.board_grid").children().eq(previous_index).addClass("back");
-        $(this).css("background-color", "burlywood");
-        $("div.board_grid").children().eq(previous_index).css("background-color", "burlywood");
-        previous_index = -1;
-        let moves = click_counter/2;
-        moves_text.text(moves);
-        rating_text.text(getStarRating(moves));
+        console.log("blaaa2   ", current_card, previous_card);
+        animateFlip(current_card_element);
+        animateFlip(previous_card_element, function() {
+            current_card_element.addClass("hidden");
+            previous_card_element.addClass("hidden");
+            clickable = true;
+            previous_card_element = null;
+        });
+    }
+}
+
+function animateFlip(el, endAnimation) {
+    el.find(".face").toggleClass("flip");
+    el.find(".back").toggleClass("flip");
+    el.find(".back").toggleClass("fade");
+    el.find(".back").one("transitionend", endAnimation);
+}
+
+function getCardStarNumber(card_element) {
+    return Number(card_element.attr('id').split('_')[1]);
+}
+
+board_grid.on("click", ".card.hidden", function(event) {
+    if (!clickable) {
         return;
     }
 
-    previous_index = current_index;
-    // event.preventDefault();
+    current_card_element = $(this);
+    click_counter += 1;
+    if (previous_card_element) {
+        clickable = false;
+        animateFlip($(this), function() {
+            matchCards(current_card_element);
+        });
+    } else {
+        animateFlip($(this));
+        previous_card_element = current_card_element;
+    }
+    
+    $(this).removeClass("hidden");
+
+    event.preventDefault();
 });
 
