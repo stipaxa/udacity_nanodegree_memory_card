@@ -16,7 +16,7 @@ let hour_text = $("#hour");
 let min_text  = $("#minute");
 let sec_text  = $("#sec");
 let moves_text = $("#moves");
-let rating_text = $("#rating");
+// let rating_text = $("#rating");
 let board_grid = $(".board_grid");
 
 let clickable = true;
@@ -29,12 +29,10 @@ function shuffle(arr) {
 }
 
 function getStarRating(moves) {
-    if (moves <= 9) {
-        return 3;
-    } else if (moves <= 12) {
-        return 2;
-    } else {
-        return 1;
+    if (moves > 14) {
+        $(".sell:nth-child(1)").find("img").attr("src", "imgs/star_off1.png");
+    } else if (moves > 20) {
+        $(".sell:nth-child(2)").find("img").attr("src", "imgs/star_off1.png");
     }
 }
 
@@ -73,11 +71,14 @@ function newGame() {
         let board_grid = $("div.main > div.board_grid");
         for (let i = 0; i < game_board.length; i++) {
             board_grid.append("<div class='card hidden' " + "id='card_" + game_board[i] + "'" + ">" + 
-            "<img class='face' src='imgs/" + game_board[i] + 
-            "_star.png'>" + 
-            "<img class='back' src='imgs/blank.png'>" +
+            "<img class='face' src='imgs/" + game_board[i] + "_.png'>" + 
+            "<img class='back' src='imgs/back.png'>" +
             "</div>");
         }
+
+        $(".sell:nth-child(1)").find("img").attr("src", "imgs/star_on1.png");
+        $(".sell:nth-child(2)").find("img").attr("src", "imgs/star_on1.png");
+        $(".sell:nth-child(3)").find("img").attr("src", "imgs/star_on1.png");
     
         // Initial values
         clickable = true;
@@ -88,7 +89,6 @@ function newGame() {
         moves = 0;
         previous_card_element = null;
         printTime(hour, min, sec);
-        rating_text.text("3");
         moves_text.text("0");
     
         window.clearInterval(interval_id);
@@ -132,7 +132,7 @@ function matchCards(current_card_element) {
     moves = click_counter/2;
     console.log("click_count ");
     moves_text.text(moves);
-    rating_text.text(getStarRating(moves));
+    getStarRating(moves);
     let current_card = getCardStarNumber(current_card_element);
     let previous_card = getCardStarNumber(previous_card_element);
     if (current_card === previous_card) {

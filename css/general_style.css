@@ -1,11 +1,11 @@
 body {
-    font-family: 'roboto', sans-serif;
-    background-color: #725a5ab4;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    background-color: #b2ebe6;
     margin: 20px;
 }
 
 .header {
-    background-image: url(../imgs/memory_card_title1.png);
+    background-image: url(../imgs/memory_card_title2.png);
     background-position: center;
     background-repeat: no-repeat;
 }
@@ -50,8 +50,6 @@ body {
 
 #start_b, #pause_b {
     display: inline-block; 
-    line-height: 50px;  
-    text-align: center;
     vertical-align: middle;
 }
 
