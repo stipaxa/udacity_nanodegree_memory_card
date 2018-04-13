@@ -9,17 +9,26 @@ let min = 0;
 let sec = 0;
 let moves = 0;
 
+// modal window (pause of the game)
 let modal_pause = $("#modal_pause");
-let modal_end_game = $("#modal_end_game");
-let pause_b = $("#pause_b");
+// close modal window (end of the game)
+let modal_game_results = $("#modal_game_results");
+// call modal window (pause of the game)
+let pause_control = $("#pause_control");
+// print hours
 let hour_text = $("#hour");
+// print minuts
 let min_text  = $("#minute");
+// print secs
 let sec_text  = $("#sec");
+// print counts of moves
 let moves_text = $("#moves");
-// let rating_text = $("#rating");
+// game board
 let board_grid = $(".board_grid");
 
 let clickable = true;
+
+newGame();
 
 function shuffle(arr) {
     for (let i = arr.length -1; i > 0; i--) {
@@ -28,6 +37,7 @@ function shuffle(arr) {
     }
 }
 
+// count moves and convert the number to picture
 function getStarRating(moves) {
     if (moves > 14) {
         $(".sell:nth-child(1)").find("img").attr("src", "imgs/star_off1.png");
@@ -63,8 +73,8 @@ function toggleTimer() {
     }
 }
 
+// Generate a new game board
 function newGame() {
-        // Generate a new game board
         shuffle(game_board);
         $(".main > .board_grid").empty();
 
@@ -89,70 +99,56 @@ function newGame() {
         moves = 0;
         previous_card_element = null;
         printTime(hour, min, sec);
-        moves_text.text("0");
+        moves_text.text("0 move(s)");
     
         window.clearInterval(interval_id);
         $("#timerI_container").addClass("pause");
         toggleTimer();
         
-        pause_b.off();
-        pause_b.on("click", function(event) {
+        pause_control.off();
+        pause_control.on("click", function(event) {
             toggleTimer();
             modal_pause.css("display", "block");
-            // event.preventDefault(); 
         });
     
         $("#pause_close").off();
         $("#pause_close").on("click", function(event) {
             toggleTimer();
             modal_pause.css("display", "none");
-            // event.preventDefault(); 
         });
-        
-        event.preventDefault(); 
 }
 
-$("#start_b").on("click", function(event) {
+$("#start_control").on("click", function(event) {
     newGame();
 });
 
-$("#modal_new_game_b").on("click", function(event) {
-    $("#modal_end_game").css("display", "none");
+$("#modal_new_game_control").on("click", function(event) {
+    $("#modal_game_results").css("display", "none");
     newGame();
 });
-
-// for testing
-function getListClasses(el) {
-    let classes = el.attr("class");
-    let classes_arr  = classes.split(" ");
-    console.log("classes: " + JSON.stringify(classes_arr));
-}
 
 function matchCards(current_card_element) {
     moves = click_counter/2;
-    console.log("click_count ");
-    moves_text.text(moves);
+    moves_text.text(moves+" move(s)");
     getStarRating(moves);
     let current_card = getCardStarNumber(current_card_element);
     let previous_card = getCardStarNumber(previous_card_element);
     if (current_card === previous_card) {
-        console.log("blaaa1");
         if (!$(".board_grid").children().hasClass("hidden")) {
             toggleTimer();
-            pause_b.off();
-            $("#time_end").text("hour: " + hour + " minutes: " + min + " sec: " + sec);
-            $("#moves_end").text(moves + " moves")
-            modal_end_game.css("display", "block");
+            pause_control.off();
+            $("#time_end").text("time: " + hour + ":" + min + ":" + sec);
+            $("#moves_end").text("moves: " + moves);
+            modal_game_results.css("display", "block");
             $("#end_game_close").off();
             $("#end_game_close").on("click", function(event) {
-                $("#modal_end_game").css("display", "none");
+                $("#modal_game_results").css("display", "none");
             });
         }
         clickable = true;
         previous_card_element = null;
     } else {
         // switch to back
-        console.log("blaaa2   ", current_card, previous_card);
         animateFlip(current_card_element);
         animateFlip(previous_card_element, function() {
             current_card_element.addClass("hidden");

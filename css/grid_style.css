@@ -3,7 +3,7 @@
     width: 100%;
     grid-gap: 10px;
     grid-template-columns: 50px 1fr 50px;
-    grid-template-rows: 50px 50px 1fr 50px;
+    grid-template-rows: 70px 50px 1fr 50px;
     grid-template-areas: 
     "header header header"
     "nav nav nav"
@@ -31,29 +31,33 @@
     grid-area: nav;
     display: grid;
     grid-gap: 5px;
-    grid-template-columns: 110px 200px 1fr 1fr;
+    grid-template-columns: 110px 200px 150px 80px;
     grid-template-areas:
     "start rating moves timer_container";
+    justify-content: center;
 }
 
 .start {
     grid-area: start;
 }
 
-#start_b {
+#start_control {
     background-image: url(../imgs/new_game.png);
 }
 
-#pause_b {
+#pause_control {
     background-image: url(../imgs/pause.png);
 }
 
-.tooltip {
+.game_controls {
     background-size: 30px 30px;
     background-position: center;
     background-repeat: no-repeat;
     width: 50px; 
     height: 50px;
+}
+
+.tooltip {
     position: relative;
     display: inline-block;
     cursor: pointer;
@@ -61,12 +65,12 @@
 
 .tooltip .tooltiptext {
     visibility: hidden;
-    width: 80px;
     background-color:  rgba(0,0,0,0.2);
     color: white;
     text-align: center;
     border-radius: 5px;
     padding: 5px;
+    margin: 10px;
 
     position: absolute;
     z-index: 1;
@@ -74,7 +78,11 @@
     left: 0%;
 }
 
-.tooltip:hover .tooltiptext {
+#start_control:hover .tooltiptext {
+    visibility: visible;
+}
+
+#pause_control:hover .tooltiptext {
     visibility: visible;
 }
 
@@ -89,13 +97,10 @@
 
 #moves {
     grid-area: moves;
-    /* background-color: forestgreen; */
 }
 
 .timer_container {
     grid-area: timer_container;
-    /* background-color: darkviolet; */
-    /* grid-area: nav; */
     display: grid;
     grid-gap: 5px;
     grid-template-columns: repeat(3, 1fr);
@@ -108,12 +113,10 @@
 */
 .sidebar {
     grid-area: sidebar;
-    /* background-color: darkgray; */
 }
 
 .sidebar2 {
     grid-area: sidebar2;
-    /* background-color: darkgray; */
 }
 
 /*
@@ -121,7 +124,6 @@
 */
 .main {
     grid-area: main;
-    /* background-color: darkred; */
 }
 
 .board_grid {

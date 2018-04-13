@@ -1,13 +1,15 @@
 body {
-    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    font-family: 'EB Garamond';
+    font-size: 22px;
     background-color: #b2ebe6;
-    margin: 20px;
+    margin: 10px 20px 10px 20px;
+
 }
 
-.header {
-    background-image: url(../imgs/memory_card_title2.png);
-    background-position: center;
-    background-repeat: no-repeat;
+.header #title{
+    color: #000061;
+    text-align: center;
+    margin-top: 10px;
 }
 
 .main {
@@ -30,7 +32,6 @@ body {
     position: relative;
     width: 100px;
     height: 100px; 
-    /* box-shadow: 1px 2px 3px rgba(0, 0, 0, .5); */
 }
 
 .flip {
@@ -42,13 +43,16 @@ body {
 }
 
 #rating, #moves, .timer_container, .footer {
-    justify-self: stretch;
     line-height: 50px;  
     text-align: center;
     vertical-align: middle;
 }
 
-#start_b, #pause_b {
+#moves, #timerI_container {
+    font-size: 30px;
+}
+
+#start_control, #pause_control {
     display: inline-block; 
     vertical-align: middle;
 }
@@ -68,11 +72,39 @@ body {
 }
 
 .modal_c {
-    background-color: papayawhip;
+    background-color: rgba(240, 231, 231);
     margin: auto;
-    padding: 20px;
-    border: 2px solid #888;
+    padding: 10px;
+    border-radius: 10px;
     width: 50%;
+}
+
+#pause {
+    color: #0556b2;
+    text-align: center;
+}
+
+#game_results_title {
+    color: #0556b2;
+    text-align: center;
+    margin-bottom: 10px;
+    margin-top: 0px;
+}
+
+#modal_new_game_control {
+    background-color: #000061;
+    color: #fff;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.center_div {
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+    width: 150px;
+    text-align: center;
+    margin-bottom: 5px;
 }
 
 #end_game_close,
@@ -83,12 +115,11 @@ body {
     font-weight: bold;
 }
 
-
 #end_game_close:hover,
 #end_game_close:focus,
 #pause_close:hover,
-#pause_close.focus {
-    color: red;
+#pause_close:focus {
+    color: #0771ea;
     text-decoration: none;
     cursor: pointer;
 }

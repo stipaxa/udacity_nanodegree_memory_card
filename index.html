@@ -4,20 +4,23 @@
         <title>Memory game</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link href='https://fonts.googleapis.com/css?family=EB Garamond' rel='stylesheet'>
         <link rel="stylesheet" href="css/general_style.css">
         <link rel="stylesheet" href="css/grid_style.css">
     </head>
     <body>
         <div class="container">
             <!-- header grid -->
-            <div class="header"></div>
+            <div class="header">
+                <h1 id="title">MEMORY GAME</h1>
+            </div>
             <!-- nav grid -->
             <div class="nav">
                 <div class="start">
-                    <div id="start_b" class="tooltip">
+                    <div id="start_control" class="game_controls tooltip">
                         <span class="tooltiptext">New game</span>
                     </div>
-                    <div id="pause_b" class="tooltip">
+                    <div id="pause_control" class="game_controls tooltip">
                         <span class="tooltiptext">Pause</span>
                     </div>
                     <!-- Modal window for pause (default: hidden)-->
@@ -25,7 +28,7 @@
                         <!-- Modal content -->
                         <div class="modal_c">
                             <span id="pause_close">&times;</span>
-                            <p>PAUSE</p>
+                            <h2 id="pause">PAUSE</h2>
                         </div>
                     </div>          
                 </div>
@@ -34,7 +37,7 @@
                     <div class="sell"><img id="sell1_img" src="imgs/star_on1.png"></div>
                     <div class="sell"><img id="sell1_img" src="imgs/star_on1.png"></div>
                 </div>
-                <div id="moves">0</div>
+                <div id="moves">0 move(s)</div>
                 <div class="timer_container pause" id="timerI_container">
                     <div id="hour">0:</div>
                     <div id="minute">0:</div>
@@ -49,14 +52,14 @@
             <div class="main">
                 <div class="board_grid"></div>
                 <!-- Modal window for final details (default: hidden)-->
-                <div id="modal_end_game" class="modal">
+                <div id="modal_game_results" class="modal">
                     <!-- Modal content -->
                     <div class="modal_c">
                         <span id="end_game_close">&times;</span>
-                        <p>Congrats</p>
-                        <div id="time_end"></div>
-                        <div id="moves_end"></div>
-                        <div id="modal_new_game_b">new game?</div>
+                        <h2 id="game_results_title">Game results</h2>
+                        <div id="time_end" class="center_div"></div>
+                        <div id="moves_end" class="center_div"></div>
+                        <div id="modal_new_game_control" class="center_div">New Game</div>
                     </div>
                 </div>
             </div>
