@@ -1,12 +1,18 @@
+// array with a numeric representation of cards 
 let game_board = new Array (1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8);
+
 let click_counter = 0;
 
+// variable for matching cards
 let previous_card_element = null;
 
+// variables for time
 let interval_id;
 let hour = 0;
 let min = 0;
 let sec = 0;
+
+// numbers of moves
 let moves = 0;
 
 // modal window (pause of the game)
@@ -25,11 +31,18 @@ let sec_text  = $("#sec");
 let moves_text = $("#moves");
 // game board
 let board_grid = $(".board_grid");
-
+// boolean variable: 
+// true - player can continue the game
+// false - player should wait to the end of a current animation
 let clickable = true;
 
+// Generate a new game
 newGame();
 
+/**
+* @description Shuffle array
+* @param {Array} arr
+*/
 function shuffle(arr) {
     for (let i = arr.length -1; i > 0; i--) {
         let k = Math.floor(Math.random() * (i + 1));
@@ -37,7 +50,11 @@ function shuffle(arr) {
     }
 }
 
-// count moves and convert the number to picture
+/**
+* @description Compare current number of moves (with 14 & 20)
+* and change "src" attribute of DOM element (a star turns off)
+* @param {number} moves
+*/
 function getStarRating(moves) {
     if (moves > 14) {
         $(".sell:nth-child(1)").find("img").attr("src", "imgs/star_off1.png");
@@ -46,12 +63,21 @@ function getStarRating(moves) {
     }
 }
 
+/**
+* @description Print current time
+* @param {number} hour
+* @param {number} min
+* @param {number} sec
+*/
 function printTime(hour, min, sec) {
     hour_text.html(hour + ":");
     min_text.html(min + ":");
     sec_text.html(sec);
 }
 
+/**
+* @description Toggle the timer
+*/
 function toggleTimer() {
     $("#timerI_container").toggleClass("pause");
     if($("#timerI_container").hasClass("pause")) {
@@ -73,11 +99,15 @@ function toggleTimer() {
     }
 }
 
-// Generate a new game board
+/**
+* @description Generate a new game
+*/
 function newGame() {
-        shuffle(game_board);
+        // clear the game board
         $(".main > .board_grid").empty();
 
+        // generate a new game board
+        shuffle(game_board);
         let board_grid = $("div.main > div.board_grid");
         for (let i = 0; i < game_board.length; i++) {
             board_grid.append("<div class='card hidden' " + "id='card_" + game_board[i] + "'" + ">" + 
@@ -86,11 +116,12 @@ function newGame() {
             "</div>");
         }
 
+        // reset rating
         $(".sell:nth-child(1)").find("img").attr("src", "imgs/star_on1.png");
         $(".sell:nth-child(2)").find("img").attr("src", "imgs/star_on1.png");
         $(".sell:nth-child(3)").find("img").attr("src", "imgs/star_on1.png");
     
-        // Initial values
+        // reset values
         clickable = true;
         click_counter = 0;
         sec = 0;
@@ -101,16 +132,19 @@ function newGame() {
         printTime(hour, min, sec);
         moves_text.text("0 move(s)");
     
+        // reset timer
         window.clearInterval(interval_id);
         $("#timerI_container").addClass("pause");
         toggleTimer();
         
+        // pause On (modal window appear)
         pause_control.off();
         pause_control.on("click", function(event) {
             toggleTimer();
             modal_pause.css("display", "block");
         });
     
+        // pause Off (modal window disappear)
         $("#pause_close").off();
         $("#pause_close").on("click", function(event) {
             toggleTimer();
@@ -118,15 +152,24 @@ function newGame() {
         });
 }
 
+/**
+* @description New game by click the icon on page
+*/
 $("#start_control").on("click", function(event) {
     newGame();
 });
 
+/**
+* @description New game by click the link on modal window
+*/
 $("#modal_new_game_control").on("click", function(event) {
     $("#modal_game_results").css("display", "none");
     newGame();
 });
 
+/**
+* @description New game by click the icon on page
+*/
 function matchCards(current_card_element) {
     moves = click_counter/2;
     moves_text.text(moves+" move(s)");
@@ -163,7 +206,10 @@ function animateFlip(el, endAnimation) {
     el.find(".face").toggleClass("flip");
     el.find(".back").toggleClass("flip");
     el.find(".back").toggleClass("fade");
-    el.find(".back").one("transitionend", endAnimation);
+    el.find(".back").one("transitionend", function(event) {
+        endAnimation();
+        event.preventDefault();
+    });
 }
 
 function getCardStarNumber(card_element) {
