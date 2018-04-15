@@ -27,4 +27,12 @@ Move Counter | Game displays the current number of moves a user has made.
 #### Addition functionality
 Animation when cards are hovered, clicked, unsuccessfully matched, and successfully matched.
 
+`Start of the game`
+
+![Start game](https://image.ibb.co/hLGErn/start_game.png)
+
+`Finish of the game`
+
+![End_game](https://image.ibb.co/b0Dagn/end_game.png)
+
 [based on UDACITY PROJECT SPECIFICATION](https://review.udacity.com/#!/rubrics/591/view)
