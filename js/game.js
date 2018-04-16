@@ -1,6 +1,7 @@
 // array with a numeric representation of cards 
 let game_board = new Array (1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8);
 
+// number counter of clicks
 let click_counter = 0;
 
 // variable for matching cards
@@ -76,6 +77,23 @@ function printTime(hour, min, sec) {
 }
 
 /**
+* @description Convert secs to mins and hours
+* and print it
+*/
+function timer() {
+    sec++;
+    if (!(sec % 60)) {
+        min++;
+        sec = 0;
+    } else if (!(sec % 60)) {
+            hour++;
+            min = 0;
+            sec = 0;
+    }
+    printTime(hour, min, sec);
+}
+
+/**
 * @description Toggle the timer
 */
 function toggleTimer() {
@@ -83,19 +101,7 @@ function toggleTimer() {
     if($("#timerI_container").hasClass("pause")) {
         window.clearInterval(interval_id);
     } else {
-        interval_id = setInterval(function() {
-            sec++;
-            if(sec === 60) {
-                min++;
-                if(min === 60) {
-                    hour++;
-                    min = 0;
-                    sec = 0;
-                }
-                sec = 0;
-            }
-            printTime(hour, min, sec);
-        }, 1000);
+        interval_id = setInterval(timer.bind(), 1000);
     }
 }
 
@@ -129,6 +135,7 @@ function newGame() {
         hour = 0;
         moves = 0;
         previous_card_element = null;
+
         printTime(hour, min, sec);
         moves_text.text("0 move(s)");
     
@@ -174,12 +181,15 @@ function matchCards(current_card_element) {
     moves = click_counter/2;
     moves_text.text(moves+" move(s)");
     getStarRating(moves);
+    // get numbers of current and previous cards
     let current_card = getCardStarNumber(current_card_element);
     let previous_card = getCardStarNumber(previous_card_element);
     if (current_card === previous_card) {
+        // check all cards are opened and matched
         if (!$(".board_grid").children().hasClass("hidden")) {
             toggleTimer();
             pause_control.off();
+            // generate a modal window with game results
             $("#time_end").text("time: " + hour + ":" + min + ":" + sec);
             $("#moves_end").text("moves: " + moves);
             modal_game_results.css("display", "block");
@@ -189,9 +199,10 @@ function matchCards(current_card_element) {
             });
         }
         clickable = true;
+        // for a new matching cards
         previous_card_element = null;
     } else {
-        // switch to back
+        // flip back two cards
         animateFlip(current_card_element);
         animateFlip(previous_card_element, function() {
             current_card_element.addClass("hidden");
@@ -202,20 +213,37 @@ function matchCards(current_card_element) {
     }
 }
 
+/**
+* @description Animate flip moving
+* @param {DOMString} el
+* @param {function} endAnimation
+*/
 function animateFlip(el, endAnimation) {
     el.find(".face").toggleClass("flip");
     el.find(".back").toggleClass("flip");
     el.find(".back").toggleClass("fade");
+    // the "transitionend" event is fired for the end of animation
     el.find(".back").one("transitionend", function(event) {
         endAnimation();
         event.preventDefault();
     });
 }
 
+
+/**
+* @description Get a number on a card
+*/
 function getCardStarNumber(card_element) {
     return Number(card_element.attr('id').split('_')[1]);
 }
 
+/**
+* @description work with the chosen card
+* The .on() method attaches "click" event handler 
+* @param {event type} "click"
+* @param {class} ".card.hidden"
+* @param {function} anonymous 
+*/
 board_grid.on("click", ".card.hidden", function(event) {
     if (!clickable) {
         return;
@@ -224,11 +252,13 @@ board_grid.on("click", ".card.hidden", function(event) {
     current_card_element = $(this);
     click_counter += 1;
     if (previous_card_element) {
+        // check a previous card for a matching to a current card
         clickable = false;
         animateFlip($(this), function() {
             matchCards(current_card_element);
         });
     } else {
+        // this is a first card for a current pair of cards
         animateFlip($(this));
         previous_card_element = current_card_element;
     }
@@ -237,4 +267,3 @@ board_grid.on("click", ".card.hidden", function(event) {
 
     event.preventDefault();
 });
-
