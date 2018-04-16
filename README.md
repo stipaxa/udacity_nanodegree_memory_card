@@ -27,6 +27,14 @@ Move Counter | Game displays the current number of moves a user has made.
 #### Addition functionality
 Animation when cards are hovered, clicked, unsuccessfully matched, and successfully matched.
 
+### Installation
+* **Clone** Clone the source repository from GitHub
+https://github.com/stipaxa/udacity_nanodegree_memory_card.git
+* **DowloadZip** Once you have downloaded the .zip file, uncompress it into a folder wherever you want (such as in C:\memory_card_game).
+
+### Running (Windows)
+Press Ctrl + O to access the Open dialog box. Navigate to the directory with `Memory card game` project, select index.html and click Open or double click.
+
 `Start of the game`
 
 ![Start game](https://image.ibb.co/hLGErn/start_game.png)
